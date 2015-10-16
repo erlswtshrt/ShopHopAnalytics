@@ -23817,6 +23817,8 @@ var React = require('react');
 var ReactFireMixin = require('reactfire');
 var Firebase = require('firebase');
 
+var ref = new Firebase("https://shophopusers.firebaseio.com");
+
 var LoginContainer = React.createClass({displayName: "LoginContainer",
   updateAppState: function() {
     this.props.updateAppState('register');
@@ -23826,7 +23828,6 @@ var LoginContainer = React.createClass({displayName: "LoginContainer",
     var password = React.findDOMNode(this.refs.password).value.trim()
     var self = this;
 
-    var ref = new Firebase("https://shophopanalytics.firebaseio.com");
     ref.authWithPassword({
       email    : email,
       password : password
@@ -23838,13 +23839,14 @@ var LoginContainer = React.createClass({displayName: "LoginContainer",
   },
   render: function() {
     return (
-      React.createElement("div", null, 
-        React.createElement("form", null, 
-          React.createElement("input", {type: "text", name: "email", placeholder: "Email", ref: "email"}), 
-          React.createElement("input", {type: "text", name: "password", placeholder: "Password", ref: "password"})
+      React.createElement("div", {className: "flex-col c full-bg h-full"}, 
+        React.createElement("div", {className: "textWhite text2"}, "analytics"), 
+        React.createElement("form", {className: "flex-col mt1"}, 
+          React.createElement("input", {className: "textInputLarge", type: "text", name: "email", placeholder: "Email", ref: "email"}), 
+          React.createElement("input", {className: "textInputLarge", type: "password", name: "password", placeholder: "Password", ref: "password"})
         ), 
-        React.createElement("div", {onClick: this.login}, "Log in"), 
-        React.createElement("div", {onClick: this.updateAppState}, "Register")
+        React.createElement("div", {className: "buttonLarge bgDarkBlue textWhite", onClick: this.login}, "Log in"), 
+        React.createElement("div", {className: "buttonLarge bgPurple textWhite", onClick: this.updateAppState}, "Register")
       )
     );
   }
@@ -23857,20 +23859,27 @@ var ReactFireMixin = require('reactfire');
 var Firebase = require('firebase');
 var QRCode = require('qrcode.react');
 
+var ref = new Firebase("https://shophopusers.firebaseio.com/");
+var authData = null;
+
+var uid = null;
+
 var NewProductContainer = React.createClass({displayName: "NewProductContainer",
+  componentDidMount: function() {
+    authData = ref.getAuth();
+    if(authData !== null) uid = authData.uid;
+  },
   getInitialState: function() {
     return { productId: null }
   },
   createProductId: function(__productName) {
     __productName = __productName.replace(/\s+/g, '');
-    return this.props.uid + __productName;
+    return uid.substring(0,5) + __productName;
   },
   addProduct: function() {
     var id = "0";
     var id = this.createProductId(React.findDOMNode(this.refs.name).value.trim());
     this.setState({ productId: id });
-
-    var ref = new Firebase("https://shophopanalytics.firebaseio.com");
 
     var name = React.findDOMNode(this.refs.name).value.trim();
     var brand = React.findDOMNode(this.refs.brand).value.trim()
@@ -23890,16 +23899,16 @@ var NewProductContainer = React.createClass({displayName: "NewProductContainer",
   render: function() {
     var qrCode = this.state.productId === null ? null : React.createElement(QRCode, {value: this.state.productId})
     return (
-      React.createElement("div", null, 
+      React.createElement("div", {className: "flex-col c full-bg h-full"}, 
         qrCode, 
-        React.createElement("form", null, 
-          React.createElement("input", {type: "text", name: "name", placeholder: "Product Name", ref: "name"}), 
-          React.createElement("input", {type: "text", name: "brand", placeholder: "Brand or Designer", ref: "brand"}), 
-          React.createElement("input", {type: "text", name: "store", placeholder: "Store", ref: "store"}), 
-          React.createElement("input", {type: "textarea", name: "description", placeholder: "Description", ref: "description"}), 
-          React.createElement("input", {type: "text", name: "category", placeholder: "Category", ref: "category"})
+        React.createElement("form", {className: "flex-col mt3"}, 
+          React.createElement("input", {className: "textInputLarge", type: "text", name: "name", placeholder: "Product Name", ref: "name"}), 
+          React.createElement("input", {className: "textInputLarge", type: "text", name: "brand", placeholder: "Brand or Designer", ref: "brand"}), 
+          React.createElement("input", {className: "textInputLarge", type: "text", name: "store", placeholder: "Store", ref: "store"}), 
+          React.createElement("input", {className: "textInputLarge", type: "textarea", name: "description", placeholder: "Description", ref: "description"}), 
+          React.createElement("input", {className: "textInputLarge", type: "text", name: "category", placeholder: "Category", ref: "category"})
         ), 
-        React.createElement("div", {onClick: this.addProduct}, "Add Product")
+        React.createElement("div", {className: "buttonLarge bgDarkBlue textWhite", onClick: this.addProduct}, "Add Product")
       )
     );
   }
@@ -23911,13 +23920,13 @@ var React = require('react');
 var ReactFireMixin = require('reactfire');
 var Firebase = require('firebase');
 
+    var ref = new Firebase('https://shophopusers.firebaseio.com/');
+
 var RegisterContainer = React.createClass({displayName: "RegisterContainer",
   getInitialState: function() {
     return { productId: null }
   },
   register: function() {
-    var ref = this.ref;
-    var ref = new Firebase('https://shophopanalytics.firebaseio.com/');
     var firstName = React.findDOMNode(this.refs.firstName).value.trim();
     var lastName = React.findDOMNode(this.refs.lastName).value.trim();
     var email = React.findDOMNode(this.refs.email).value.trim();
@@ -23930,7 +23939,7 @@ var RegisterContainer = React.createClass({displayName: "RegisterContainer",
       if (error) {
         console.log("Error creating user:", error);
       } else {
-        var usersRef = ref.child("users");
+        var usersRef = ref.child("webusers");
         usersRef.child(userData.uid).set({ 
           firstName: firstName,
           lastName: lastName,
@@ -23941,14 +23950,14 @@ var RegisterContainer = React.createClass({displayName: "RegisterContainer",
   },
   render: function() {
     return (
-      React.createElement("div", null, 
-        React.createElement("form", null, 
-          React.createElement("input", {type: "text", name: "firstName", placeholder: "First Name", ref: "firstName"}), 
-          React.createElement("input", {type: "text", name: "lastName", placeholder: "Last Name", ref: "lastName"}), 
-          React.createElement("input", {type: "text", name: "email", placeholder: "Email", ref: "email"}), 
-          React.createElement("input", {type: "text", name: "password", placeholder: "Password", ref: "password"})
+      React.createElement("div", {className: "flex-col c full-bg h-full"}, 
+        React.createElement("form", {className: "flex-col"}, 
+          React.createElement("input", {className: "textInputLarge", type: "text", name: "firstName", placeholder: "First Name", ref: "firstName"}), 
+          React.createElement("input", {className: "textInputLarge", type: "text", name: "lastName", placeholder: "Last Name", ref: "lastName"}), 
+          React.createElement("input", {className: "textInputLarge", type: "text", name: "email", placeholder: "Email", ref: "email"}), 
+          React.createElement("input", {className: "textInputLarge", type: "password", name: "password", placeholder: "Password", ref: "password"})
         ), 
-        React.createElement("div", {onClick: this.register}, "Register")
+        React.createElement("div", {className: "buttonLarge bgDarkBlue textWhite", onClick: this.register}, "Register")
       )
     );
   }
@@ -23961,6 +23970,8 @@ var LoginContainer = require('./LoginContainer');
 var RegisterContainer = require('./RegisterContainer');
 var DashboardContainer = require('./DashboardContainer');
 
+var ref = new Firebase('https://shophopusers.firebaseio.com/');
+
 var MasterContainer = React.createClass({displayName: "MasterContainer",
 	updateAppState: function(__state) {
 		this.setState({ appState: __state });
@@ -23971,22 +23982,19 @@ var MasterContainer = React.createClass({displayName: "MasterContainer",
 	},
 	setUser: function(__uid) {
 		var self = this;
-	    var ref = this.ref;
-	    ref = new Firebase('https://shophopanalytics.firebaseio.com/');
 
-	    var usersRef = ref.child("users");
+	    var usersRef = ref.child("webusers");
 	    var userRef = usersRef.child(__uid);
 
 	    userRef.on("value", function(snapshot) {
-	      	self.setState({ user: snapshot.val(),
-	      					uid: __uid });
+	      	self.setState({ user: snapshot.val() });
 	      	self.updateAppState('home');
 	    });
 	},
 	render: function() {
 		switch(this.state.appState) {
 		    case 'home':
-		        return React.createElement(DashboardContainer, {user: this.state.user, updateAppState: this.updateAppState, uid: this.state.uid})
+		        return React.createElement(DashboardContainer, {user: this.state.user, updateAppState: this.updateAppState})
 		        break;
 		    case 'login':
 		        return React.createElement(LoginContainer, {setUser: this.setUser, updateAppState: this.updateAppState})

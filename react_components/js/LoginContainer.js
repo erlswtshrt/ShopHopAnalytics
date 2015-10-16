@@ -2,6 +2,8 @@ var React = require('react');
 var ReactFireMixin = require('reactfire');
 var Firebase = require('firebase');
 
+var ref = new Firebase("https://shophopusers.firebaseio.com");
+
 var LoginContainer = React.createClass({displayName: "LoginContainer",
   updateAppState: function() {
     this.props.updateAppState('register');
@@ -11,7 +13,6 @@ var LoginContainer = React.createClass({displayName: "LoginContainer",
     var password = React.findDOMNode(this.refs.password).value.trim()
     var self = this;
 
-    var ref = new Firebase("https://shophopanalytics.firebaseio.com");
     ref.authWithPassword({
       email    : email,
       password : password
@@ -23,13 +24,14 @@ var LoginContainer = React.createClass({displayName: "LoginContainer",
   },
   render: function() {
     return (
-      React.createElement("div", null, 
-        React.createElement("form", null, 
-          React.createElement("input", {type: "text", name: "email", placeholder: "Email", ref: "email"}), 
-          React.createElement("input", {type: "text", name: "password", placeholder: "Password", ref: "password"})
+      React.createElement("div", {className: "flex-col c full-bg h-full"}, 
+        React.createElement("div", {className: "textWhite text2"}, "analytics"), 
+        React.createElement("form", {className: "flex-col mt1"}, 
+          React.createElement("input", {className: "textInputLarge", type: "text", name: "email", placeholder: "Email", ref: "email"}), 
+          React.createElement("input", {className: "textInputLarge", type: "password", name: "password", placeholder: "Password", ref: "password"})
         ), 
-        React.createElement("div", {onClick: this.login}, "Log in"), 
-        React.createElement("div", {onClick: this.updateAppState}, "Register")
+        React.createElement("div", {className: "buttonLarge bgDarkBlue textWhite", onClick: this.login}, "Log in"), 
+        React.createElement("div", {className: "buttonLarge bgPurple textWhite", onClick: this.updateAppState}, "Register")
       )
     );
   }

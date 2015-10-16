@@ -2,13 +2,13 @@ var React = require('react');
 var ReactFireMixin = require('reactfire');
 var Firebase = require('firebase');
 
+    var ref = new Firebase('https://shophopusers.firebaseio.com/');
+
 var RegisterContainer = React.createClass({
   getInitialState: function() {
     return { productId: null }
   },
   register: function() {
-    var ref = this.ref;
-    var ref = new Firebase('https://shophopanalytics.firebaseio.com/');
     var firstName = React.findDOMNode(this.refs.firstName).value.trim();
     var lastName = React.findDOMNode(this.refs.lastName).value.trim();
     var email = React.findDOMNode(this.refs.email).value.trim();
@@ -21,7 +21,7 @@ var RegisterContainer = React.createClass({
       if (error) {
         console.log("Error creating user:", error);
       } else {
-        var usersRef = ref.child("users");
+        var usersRef = ref.child("webusers");
         usersRef.child(userData.uid).set({ 
           firstName: firstName,
           lastName: lastName,
@@ -32,14 +32,14 @@ var RegisterContainer = React.createClass({
   },
   render: function() {
     return (
-      <div>
-        <form>
-          <input type="text" name="firstName" placeholder="First Name" ref="firstName" />
-          <input type="text" name="lastName" placeholder="Last Name" ref="lastName" />
-          <input type="text" name="email" placeholder="Email" ref="email" />
-          <input type="text" name="password" placeholder="Password" ref="password" />
+      <div className="flex-col c full-bg h-full">
+        <form className="flex-col">
+          <input className="textInputLarge" type="text" name="firstName" placeholder="First Name" ref="firstName" />
+          <input className="textInputLarge" type="text" name="lastName" placeholder="Last Name" ref="lastName" />
+          <input className="textInputLarge" type="text" name="email" placeholder="Email" ref="email" />
+          <input className="textInputLarge" type="password" name="password" placeholder="Password" ref="password" />
         </form>
-        <div onClick={this.register}>Register</div>
+        <div className="buttonLarge bgDarkBlue textWhite" onClick={this.register}>Register</div>
       </div>
     );
   }
