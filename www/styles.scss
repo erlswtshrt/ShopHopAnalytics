@@ -2,7 +2,7 @@
 	font-family: 'Avenir';
 	font-style: light;
 	font-weight: light;
-	src: url('../assets/Fonts/AvenirLTStd-Medium.woff') format('woff');
+  src: url('../assets/Fonts/ProximaNova/ProximaNovaSoft/webFonts/proximanovasoft-regular.woff') format('woff');
 }
 
 $blue: #059ece;
@@ -19,6 +19,7 @@ $white: #ffffff;
 $navy: #3D4957;
 $darkPurple: #2c2238;
 $grey: #B1B1B1;
+$darkGrey: #B1B1B1;
 
 body {
   font-family: 'Avenir';
@@ -81,6 +82,13 @@ hr {
 .bgNavy {
     background-color: $navy;
 }
+.bgGrey {
+    background-color: $grey;
+}
+
+.mt0-5 {
+  margin-top: 0.5rem;
+}
 
 .mt1 {
   margin-top: 1rem;
@@ -94,8 +102,28 @@ hr {
   margin-top: 3rem;
 }
 
+.p0-5 {
+  padding: 0.5rem;
+}
+
+.p1 {
+  padding: 1rem;
+}
+
 .pt3 {
   padding-top: 3rem;
+}
+
+.ml0-5 {
+  margin-left: 0.5rem;
+}
+
+.ml1 {
+  margin-left: 1rem;
+}
+
+.ml2 {
+  margin-left: 2rem;
 }
 
 .ml3 {
@@ -104,6 +132,24 @@ hr {
 
 .mr3 {
   margin-right: 3rem;
+}
+
+.pr3 {
+  padding-right: 3rem;
+}
+.pl3 {
+  padding-left: 3rem;
+}
+
+.pr5 {
+  padding-right: 5rem;
+}
+.pl5 {
+  padding-left: 5rem;
+}
+
+.mb2 {
+  margin-bottom: 2rem;
 }
 
 .textGrey {
@@ -118,12 +164,23 @@ hr {
   font-size: 1.2rem;
 }
 
+.text1-5 {
+  font-size: 1.5rem;
+}
+
+.text1-8 {
+  font-size: 1.8rem;
+}
+
 .text2 {
   font-size: 2rem;
 }
 
 .h10 {
 	height: 10rem;
+}
+.h15 {
+  height: 15rem;
 }
 .h20 {
 	height: 20rem;
@@ -138,30 +195,42 @@ hr {
 	height: 50rem;
 }
 
+.textInputLarge:focus {
+  width: 22rem;
+  transition: 0.1s;
+}
+
 .textInputLarge {
-  	width: 20rem;
-  	border-radius: 0.25rem;
-  	background-color: $white;
+    width: 20rem;
+    border-radius: 0.25rem;
+    background-color: $white;
     font-size: 0.9rem;
-  	margin: 0.25rem;
-  	padding-left: 0.5rem;
-  	padding-right: 0.5rem;
-  	padding: 0.7rem;
-  	border: none;
+    margin: 0.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding: 0.7rem;
+    border: none;
     font-weight: light !important;
+    transition: 0.1s;
+}
+
+.buttonLarge:hover {
+    width: 22rem;
+    transition: 0.05s;
 }
 
 .buttonLarge {
-	width: 20rem;
-	border-radius: 0.25rem;
-	padding-top: 0.7rem;
-	padding-bottom: 0.7rem;
-	margin: 0.25rem;
+  width: 20rem;
+  border-radius: 0.25rem;
+  padding-top: 0.7rem;
+  padding-bottom: 0.7rem;
+  margin: 0.25rem;
   font-size: 0.9rem;
   border: none;
   text-align: center;
   cursor: pointer;
   font-weight: light !important;
+  transition: 0.1s;
 }
 
 *:focus {
@@ -177,6 +246,12 @@ body {
   padding: 0 !important;
 }
 
+.bRightWhite {
+  border-right-width: 1px;
+  border-right-color: $white;
+  border-right-style: solid;
+}
+
 .flex-col {
   display: -webkit-flex;
   display: flex;
@@ -189,20 +264,62 @@ body {
   display: flex;
   -webkit-flex-direction: row;
   flex-direction:         row;
+  justify-content: stretch; 
 }
 
-.h-full {
-	height: 100%;
+.flex-row-right {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction:         row;
+  justify-content: flex-end;  
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.homeHeader-bg {
+  height: 25rem;
+  background-image: linear-gradient(
+      rgba(75, 116, 181, 0.5), 
+      rgba(141, 111, 181, 1)
+    ), url("../assets/storebg.jpg");
+  background-size: cover;
+  background-position: 0rem 0rem;
 }
 
 .full-bg {
   height: 100%;
   background-image: linear-gradient(
-      rgba(5, 158, 206, 1.0), 
-      rgba(5, 158, 206, 0.4)
+      rgba(75, 116, 181, 0.8), 
+      rgba(141, 111, 181, 0.6)
     ), url("../assets/storebg.jpg");
   background-size: cover;
   background-position: 0rem 0rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.tile-bg {
+  background-image: linear-gradient(
+      rgba(75, 116, 181, 0.8), 
+      rgba(141, 111, 181, 0.8)
+    ), url("../assets/storebg.jpg");
+  background-size: cover;
+  background-position: 0rem 0rem;
+}
+
+.opacityTile {
+  opacity:0.7;
+  transition: 0.1s;
+}
+
+.opacityTile:hover {
+  opacity:1;
+  transition: 0.1s;
 }
 
 .p-0-25 {
@@ -221,12 +338,21 @@ body {
 	justify-content: center;
 }
 
+.align-end {
+  align-items: flex-end;
+}
+
 .c-v {
 	align-items: center;
 }
 
 .p {
 	cursor: pointer;
+}
+
+.right {
+  position: absolute;
+  right: 1rem;
 }
 
 .c {
@@ -238,4 +364,57 @@ body {
 .logo {
 	height: 150px;
 	width: 150px;
+}
+
+.spinner {
+  margin: 100px auto;
+  width: 100px;
+  height: 40px;
+  text-align: center;
+  font-size: 10px;
+}
+
+.spinner > div {
+  background-color: #fff;
+  height: 100%;
+  width: 12px;
+  display: inline-block;
+  
+  -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+  animation: sk-stretchdelay 1.2s infinite ease-in-out;
+}
+
+.spinner .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+
+.spinner .rect3 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+.spinner .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+.spinner .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+
+@-webkit-keyframes sk-stretchdelay {
+  0%, 40%, 100% { -webkit-transform: scaleY(0.1) }  
+  40% { -webkit-transform: scaleY(1.0) }
+}
+
+@keyframes sk-stretchdelay {
+  0%, 40%, 100% { 
+    transform: scaleY(0.1);
+    -webkit-transform: scaleY(0.1);
+  }  40% { 
+    transform: scaleY(1.0);
+    -webkit-transform: scaleY(1.0);
+  }
 }

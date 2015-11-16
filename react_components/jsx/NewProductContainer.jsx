@@ -31,28 +31,36 @@ var NewProductContainer = React.createClass({
     var description = React.findDOMNode(this.refs.description).value.trim()
     var category = React.findDOMNode(this.refs.category).value.trim()
 
+    var timeStamp = new Date().getTime().toString();
+
+    ref.child("webusers").child(uid).child("products").child(id).set({
+      time: timeStamp,
+    });
+
     var productsRef = ref.child("products");
     productsRef.child(id).set({ 
       name: name,
       brand: brand,
       store: store,
       description: description,
-      category: category
+      category: category,
+      views: 0
     });
   },
   render: function() {
-    var qrCode = this.state.productId === null ? null : <QRCode value={this.state.productId} />
+    var qrCode = this.state.productId === null ? null : <QRCode className="mb2" value={this.state.productId} />
     return (
       <div className="flex-col c full-bg h-full">
         {qrCode}
-        <form className="flex-col mt3">
+        <div className="textWhite text1-2 mt2">Add a new product.</div>
+        <form className="flex-col mt2 c">
           <input className="textInputLarge" type="text" name="name" placeholder="Product Name" ref="name" />
           <input className="textInputLarge" type="text" name="brand" placeholder="Brand or Designer" ref="brand" />
           <input className="textInputLarge" type="text" name="store" placeholder="Store" ref="store" />
           <input className="textInputLarge" type="textarea" name="description" placeholder="Description" ref="description" />
           <input className="textInputLarge" type="text" name="category" placeholder="Category" ref="category" />
         </form>
-        <div className="buttonLarge bgDarkBlue textWhite" onClick={this.addProduct}>Add Product</div>
+        <div className="buttonLarge bgGreen textWhite" onClick={this.addProduct}>Add Product</div>
       </div>
     );
   }

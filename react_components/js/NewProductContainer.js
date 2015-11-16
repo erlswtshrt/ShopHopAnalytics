@@ -31,28 +31,36 @@ var NewProductContainer = React.createClass({displayName: "NewProductContainer",
     var description = React.findDOMNode(this.refs.description).value.trim()
     var category = React.findDOMNode(this.refs.category).value.trim()
 
+    var timeStamp = new Date().getTime().toString();
+
+    ref.child("webusers").child(uid).child("products").child(id).set({
+      time: timeStamp,
+    });
+
     var productsRef = ref.child("products");
     productsRef.child(id).set({ 
       name: name,
       brand: brand,
       store: store,
       description: description,
-      category: category
+      category: category,
+      views: 0
     });
   },
   render: function() {
-    var qrCode = this.state.productId === null ? null : React.createElement(QRCode, {value: this.state.productId})
+    var qrCode = this.state.productId === null ? null : React.createElement(QRCode, {className: "mb2", value: this.state.productId})
     return (
       React.createElement("div", {className: "flex-col c full-bg h-full"}, 
         qrCode, 
-        React.createElement("form", {className: "flex-col mt3"}, 
+        React.createElement("div", {className: "textWhite text1-2 mt2"}, "Add a new product."), 
+        React.createElement("form", {className: "flex-col mt2 c"}, 
           React.createElement("input", {className: "textInputLarge", type: "text", name: "name", placeholder: "Product Name", ref: "name"}), 
           React.createElement("input", {className: "textInputLarge", type: "text", name: "brand", placeholder: "Brand or Designer", ref: "brand"}), 
           React.createElement("input", {className: "textInputLarge", type: "text", name: "store", placeholder: "Store", ref: "store"}), 
           React.createElement("input", {className: "textInputLarge", type: "textarea", name: "description", placeholder: "Description", ref: "description"}), 
           React.createElement("input", {className: "textInputLarge", type: "text", name: "category", placeholder: "Category", ref: "category"})
         ), 
-        React.createElement("div", {className: "buttonLarge bgDarkBlue textWhite", onClick: this.addProduct}, "Add Product")
+        React.createElement("div", {className: "buttonLarge bgGreen textWhite", onClick: this.addProduct}, "Add Product")
       )
     );
   }

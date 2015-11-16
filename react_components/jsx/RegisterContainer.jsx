@@ -33,7 +33,7 @@ var RegisterContainer = React.createClass({
   render: function() {
     return (
       <div className="flex-col c full-bg h-full">
-        <form className="flex-col">
+        <form className="flex-col c">
           <input className="textInputLarge" type="text" name="firstName" placeholder="First Name" ref="firstName" />
           <input className="textInputLarge" type="text" name="lastName" placeholder="Last Name" ref="lastName" />
           <input className="textInputLarge" type="text" name="email" placeholder="Email" ref="email" />

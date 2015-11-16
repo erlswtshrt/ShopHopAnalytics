@@ -2,10 +2,22 @@ var React = require('react/addons');
 var LoginContainer = require('./LoginContainer');
 var RegisterContainer = require('./RegisterContainer');
 var DashboardContainer = require('./DashboardContainer');
+var HomeContainer = require('./HomeContainer');
+var AnalyticsContainer = require('./AnalyticsContainer');
+var NewProductContainer = require('./NewProductContainer');
+
+var Router = require('react-router').Router
+var Route = require('react-router').Route
+var Link = require('react-router').Link
+var IndexRoute = require('react-router').IndexRoute
+var History = require('history');
+var createBrowserHistory = require('history/lib/createBrowserHistory');
+
 
 var ref = new Firebase('https://shophopusers.firebaseio.com/');
 
 var MasterContainer = React.createClass({displayName: "MasterContainer",
+	 mixins: [ History ],
 	updateAppState: function(__state) {
 		this.setState({ appState: __state });
 	},
@@ -25,20 +37,24 @@ var MasterContainer = React.createClass({displayName: "MasterContainer",
 	    });
 	},
 	render: function() {
-		switch(this.state.appState) {
-		    case 'home':
-		        return React.createElement(DashboardContainer, {user: this.state.user, updateAppState: this.updateAppState})
-		        break;
-		    case 'login':
-		        return React.createElement(LoginContainer, {setUser: this.setUser, updateAppState: this.updateAppState})
-		        break;
-		    case 'register':
-		        return React.createElement(RegisterContainer, null)
-		        break;
-		    default:
-		        return React.createElement("div", null, "rendering error")
-		}
+		return 	React.createElement("div", null, this.props.children);
 	}
 });
 
-React.render(React.createElement(MasterContainer, null), document.body);
+var requireAuth = function() {
+	authData = ref.getAuth();
+  if(authData === null) this.history.pushState(null, '/login');
+}
+
+React.render((
+  React.createElement(Router, {history: createBrowserHistory()}, 
+    React.createElement(Route, {path: "/", component: MasterContainer}, 
+    	React.createElement(IndexRoute, {component: LoginContainer}), 
+    	React.createElement(Route, {path: "login", component: LoginContainer}), 
+      React.createElement(Route, {path: "register", component: RegisterContainer, onEnter: requireAuth}), 
+      React.createElement(Route, {path: "home", component: HomeContainer, onEnter: requireAuth}), 
+      React.createElement(Route, {path: "newproduct", component: NewProductContainer, onEnter: requireAuth}), 
+      React.createElement(Route, {path: "analytics", component: AnalyticsContainer, onEnter: requireAuth})
+    )
+  )
+), document.body)
